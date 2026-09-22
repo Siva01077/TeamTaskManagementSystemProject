@@ -1,0 +1,64 @@
+<div class="container">
+  <h1>Manager Panel</h1>
+
+  <section>
+    <h2>Create Task</h2>
+
+    <form (ngSubmit)="createTask()">
+      <input [(ngModel)]="newTask.title" name="title" placeholder="Task title" required>
+      <textarea [(ngModel)]="newTask.description" name="description" placeholder="Description"></textarea>
+
+      <label>Deadline</label>
+      <input type="date" [(ngModel)]="newTask.deadline" name="deadline" required>
+
+      <label>Priority</label>
+      <select [(ngModel)]="newTask.priority" name="priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+
+      <label>Assign To</label>
+      <select [(ngModel)]="newTask.assignedToUserId" name="assignedToUserId" required>
+        <option [value]="0">Select User</option>
+        <option *ngFor="let user of users" [value]="user.id">{{ user.fullName }}</option>
+      </select>
+
+      <button type="submit">Create Task</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Tasks</h2>
+
+    <div>
+      <select [(ngModel)]="selectedStatus" (change)="loadTasks()">
+        <option value="">All Statuses</option>
+        <option value="To Do">To Do</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Done">Done</option>
+      </select>
+
+      <select [(ngModel)]="selectedPriority" (change)="loadTasks()">
+        <option value="">All Priorities</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </div>
+
+    <div class="task-card" *ngFor="let task of tasks">
+      <h3>{{ task.title }}</h3>
+      <p>{{ task.description }}</p>
+      <p>Priority: {{ task.priority }}</p>
+      <p>Deadline: {{ task.deadline | date }}</p>
+      <p>Status: {{ task.status }}</p>
+
+      <select [ngModel]="task.status" (ngModelChange)="updateStatus(task, $event)">
+        <option value="To Do">To Do</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Done">Done</option>
+      </select>
+    </div>
+  </section>
+</div>

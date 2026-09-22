@@ -1,0 +1,37 @@
+<div class="dashboard">
+  <header>
+    <div>
+      <h1>Task Management System</h1>
+      <p *ngIf="user">Welcome, {{ user.fullName }}</p>
+    </div>
+
+    <button (click)="logout()">Logout</button>
+  </header>
+
+  <main>
+    <div class="role-card" *ngIf="user">
+      <h2>Your Role</h2>
+      <p>{{ user.role }}</p>
+    </div>
+
+    <div class="dashboard-grid" *ngIf="user">
+      <div class="dashboard-card" *ngIf="user.role === 'Admin'">
+        <h2>Admin</h2>
+        <p>Manage users, roles and teams.</p>
+        <button (click)="openAdmin()">Admin Panel</button>
+      </div>
+
+      <div class="dashboard-card" *ngIf="user.role === 'Manager'">
+        <h2>Manager</h2>
+        <p>Manage team members and tasks.</p>
+        <button (click)="openManager()">Manager Panel</button>
+      </div>
+
+      <div class="dashboard-card" *ngIf="user.role === 'User'">
+        <h2>My Tasks</h2>
+        <p>View and update your assigned tasks.</p>
+        <button (click)="openUser()">My Tasks</button>
+      </div>
+    </div>
+  </main>
+</div>
